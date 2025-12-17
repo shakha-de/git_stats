@@ -1,8 +1,37 @@
 # git_stats
 
-Analyse/Visualise git logs with Streamlit.
+Kleine Streamlit-App, die eine `git log --numstat`-Ausgabe analysiert und als Dashboard visualisiert.
 
-## Local run
+## Live-App
+
+https://gitlogs.streamlit.app/
+
+## Nutzung
+
+1. In einem Git-Repository eine kompatible Datei erzeugen:
+
+```bash
+git log --numstat --format="%H %ct %an" > gitlog.txt
+```
+
+2. In der App `gitlog.txt` hochladen.
+
+## Eingabeformat (gitlog.txt)
+
+Die Datei besteht aus wiederholten Blöcken:
+
+- Kopfzeile pro Commit: `<40-hex-hash> <unix-timestamp> <author name>`
+- Danach beliebig viele `--numstat`-Zeilen: `<added> <deleted> <path>`
+
+Beispiel:
+
+```
+<hash> <timestamp> <author>
+12 3 src/foo.py
+0 1 README.md
+```
+
+## Lokal starten
 
 ```bash
 python -m venv .venv
@@ -11,19 +40,58 @@ pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
-## Input file format (gitlog.txt)
+## Deployment (Streamlit Community Cloud)
 
-Generate a compatible file from any git repo:
+- **Main file path**: `streamlit_app.py`
+- Python-Version: `runtime.txt`
+- Dependencies: `requirements.txt`
+
+## English
+
+# git_stats
+
+Small Streamlit app that analyzes `git log --numstat` output and visualizes it as a dashboard.
+
+## Live App
+
+https://gitlogs.streamlit.app/
+
+## Usage
+
+1. Generate a compatible file from any Git repository:
 
 ```bash
 git log --numstat --format="%H %ct %an" > gitlog.txt
 ```
 
-Then upload `gitlog.txt` in the app UI.
+2. Upload `gitlog.txt` in the app UI.
 
-## Deploy to Streamlit Community Cloud
+## Input Format (gitlog.txt)
 
-- Push this repository to GitHub.
-- In Streamlit Cloud, create a new app from the repo.
-- Set **Main file path** to `streamlit_app.py`.
-- Streamlit Cloud will install dependencies from `requirements.txt` and use `runtime.txt` for the Python version.
+The file consists of repeated blocks:
+
+- Header per commit: `<40-hex-hash> <unix-timestamp> <author name>`
+- Followed by any number of `--numstat` lines: `<added> <deleted> <path>`
+
+Example:
+
+```
+<hash> <timestamp> <author>
+12 3 src/foo.py
+0 1 README.md
+```
+
+## Local Run
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+## Deployment (Streamlit Community Cloud)
+
+- **Main file path**: `streamlit_app.py`
+- Python version: `runtime.txt`
+- Dependencies: `requirements.txt`
